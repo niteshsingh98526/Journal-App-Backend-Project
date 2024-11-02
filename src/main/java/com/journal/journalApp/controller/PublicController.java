@@ -1,9 +1,11 @@
 package com.journal.journalApp.controller;
 
+import com.journal.journalApp.dto.UserDTO;
 import com.journal.journalApp.entity.User;
 import com.journal.journalApp.service.UserDetailsServiceImpl;
 import com.journal.journalApp.service.UserService;
 import com.journal.journalApp.utils.JwtUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/public")
 @Slf4j
+@Tag(name = "Public API's")
 public class PublicController {
 
     @Autowired
@@ -35,10 +38,15 @@ public class PublicController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody User user){
+    public ResponseEntity signup(@RequestBody UserDTO user){
         try {
-            userService.saveNewUser(user);
-            return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+            User userDTO = new User();
+            userDTO.setEmail(user.getEmail());
+            userDTO.setUserName(user.getUserName());
+            userDTO.setPassword(user.getPassword());
+            userDTO.setSentimentAnalysis(user.isSentimentAnalysis());
+            userService.saveNewUser(userDTO);
+            return new ResponseEntity<>(userDTO, HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

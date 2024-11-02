@@ -5,6 +5,7 @@ import com.journal.journalApp.entity.User;
 import com.journal.journalApp.repository.UserRepository;
 import com.journal.journalApp.service.UserService;
 import com.journal.journalApp.service.WeatherService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "User API's", description = "Read, Update, Delete")
 public class UserController {
 
     @Autowired
