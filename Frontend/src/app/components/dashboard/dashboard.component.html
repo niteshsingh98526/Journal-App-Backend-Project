@@ -1,0 +1,37 @@
+<div class='dashboard'>
+    <div class="dashboard-nav">
+        <header><a href="dashboard" class="menu-toggle"><i class="fas fa-journal-whills"></i></a><a href="dashboard"
+                class="brand-logo"><i class="fas fa-anchor"></i> <span>JOURNAL APP</span></a></header>
+        <nav class="dashboard-nav-list"><a href="dashboard" class="dashboard-nav-item"><i class="fas fa-home"></i>
+                Home </a><a href="dashboard" class="dashboard-nav-item active"><i class="fas fa-tachometer-alt"></i>
+                dashboard
+            </a><a href="dashboard/create-new" class="dashboard-nav-item"><i class="fas fa-file-upload"></i> Add-Entry
+            </a>
+            <div class='dashboard-nav-dropdown'><a href="dashboard/edit"
+                    class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i>
+                    Edit-Entry </a>
+
+            </div>
+            <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
+                        class="fas fa-users"></i> Users </a>
+                <div class='dashboard-nav-dropdown-menu'><a href="#" class="dashboard-nav-dropdown-item">All</a><a
+                        href="#" class="dashboard-nav-dropdown-item">Subscribed</a><a href="#"
+                        class="dashboard-nav-dropdown-item">Non-subscribed</a><a href="#"
+                        class="dashboard-nav-dropdown-item">Banned</a><a href="#"
+                        class="dashboard-nav-dropdown-item">New</a></div>
+            </div>
+            <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a href="#"
+                class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+            <div class="nav-item-divider"></div>
+            <a href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+        </nav>
+    </div>
+
+    <div class='dashboard-app'>
+        <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a></header>
+        <app-create-entry></app-create-entry>
+        <app-edit-entry></app-edit-entry>
+        <app-foot></app-foot>
+    </div>
+
+</div>

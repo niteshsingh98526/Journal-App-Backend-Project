@@ -1,0 +1,48 @@
+<div class="container mt-5 d-flex justify-content-center mb-5">
+    <div class="col-lg-6">
+        <!-- Login Card -->
+        <div class="card login-card shadow mx-5">
+            <!-- Header -->
+            <div class="card-header text-center text-white">
+                <h4>Login</h4>
+            </div>
+
+            <!-- Login Form -->
+            <div class="card-body mx-5">
+                <form [formGroup]="userForm" (ngSubmit)="yesLogin()">
+                    <!-- Username Field -->
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label text-white">Username</label>
+                        <input type="text" formControlName="userName" class="form-control"
+                            [ngClass]="{'is-invalid': submitted && getFormControl('userName')?.errors}">
+                        <div *ngIf="submitted && getFormControl('userName')?.errors" class="invalid-feedback">
+                            <span *ngIf="getFormControl('userName')?.errors?.['required']">Username is required.</span>
+                            <span *ngIf="getFormControl('userName')?.errors?.['email']">Enter a valid username.</span>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label text-white">Password</label>
+                        <input type="password" formControlName="password" class="form-control"
+                            [ngClass]="{'is-invalid': submitted && getFormControl('password')?.errors}">
+                        <div *ngIf="submitted && getFormControl('password')?.errors" class="invalid-feedback">
+                            <span *ngIf="getFormControl('password')?.errors?.['required']">Password is required.</span>
+                            <span *ngIf="getFormControl('password')?.errors?.['minlength']">Password must be at least 5
+                                characters.</span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+
+                <!-- Register & Admin Login Buttons -->
+                <div class="text-center mt-3">
+                    <button class="btn btn-secondary me-2" (click)="navigateToRegister()">Register</button>
+                    <button class="btn btn-dark" (click)="navigateToAdminLogin()">Admin Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

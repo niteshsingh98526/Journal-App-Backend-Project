@@ -1,0 +1,63 @@
+<div class="container">
+    <!-- App Header -->
+    <h1>My Journal</h1>
+    <p class="welcome-message">Welcome back! Ready to write something new?</p>
+
+    <!-- Button to Open Modal -->
+    <button class="btn btn-primary new-entry-button" (click)="openModal()">+ New Entry</button>
+
+    <!-- Bootstrap Modal for Adding New Entry -->
+    <div #journalModal class="modal fade" id="journalModal" tabindex="-1" aria-labelledby="modalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Add New Journal Entry</h5>
+                    <button type="button" class="btn-close" (click)="closeModal()"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form #journalForm="ngForm" (ngSubmit)="addEntry()">
+                        <!-- Title Input -->
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" [(ngModel)]="newEntry.title" name="title"
+                                required />
+                        </div>
+
+                        <!-- Content Input -->
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-control" rows="3" [(ngModel)]="newEntry.content" name="content"
+                                required></textarea>
+                        </div>
+
+                        <!-- Sentiment Input -->
+                        <div class="mb-3">
+                            <label class="form-label">Sentiment</label>
+                            <textarea class="form-control" rows="4" [(ngModel)]="newEntry.Sentiment" name="sentiment"
+                                required></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-success" [disabled]="journalForm.invalid">Save
+                            Entry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Entries Section -->
+    <div class="recent-entries">
+        <h2>Recent Entries</h2>
+        @for (entry of journalEntries; track entry.id) {
+        <div class="entry">
+            <h3>{{ entry.title }}</h3>
+            <p>{{ entry.content }}</p>
+            <p>{{ entry.date | date: 'mediumDate' }}</p>
+            <p>{{ entry.sentiment }}</p>
+        </div>
+        }
+    </div>
+</div>

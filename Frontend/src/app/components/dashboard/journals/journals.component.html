@@ -1,0 +1,23 @@
+<div class="container mt-5">
+    <h1 class="text-center mb-4">My Journals</h1>
+
+    @for (journal of journals; track journal.id) {
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ journal.title }}</h5>
+            <p class="card-text">{{ journal.content }}</p>
+            <p class="card-text">
+                <small class="text-muted">{{ journal.date | date: 'mediumDate' }}</small>
+            </p>
+            <div class="d-flex gap-2">
+                <a href="#" class="btn btn-primary">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <button class="btn btn-danger" (click)="deleteJournal(journal.id)">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+</div>

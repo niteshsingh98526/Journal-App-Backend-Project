@@ -1,0 +1,17 @@
+.footer {
+    background-color: #f8f9fa; /* Light background */
+    padding: 10px 0; /* Padding for top and bottom */
+  }
+  
+  .footer .text-muted {
+    color: #6c757d; /* Bootstrap muted text color */
+  }
+  
+  .footer a {
+    color: #007bff; /* Bootstrap primary color */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+  }
