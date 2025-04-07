@@ -1,5 +1,6 @@
 package com.journal.journalApp.controller;
 
+import com.journal.journalApp.dto.JournalDTO;
 import com.journal.journalApp.entity.JournalEntry;
 import com.journal.journalApp.entity.User;
 import com.journal.journalApp.service.JournalEntryService;
@@ -20,8 +21,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+
 @RequestMapping("/journal")
 @Tag(name = "Journal API's")
+@CrossOrigin(origins = "http://localhost:4200/journal")
 public class JournalEntryController {
 
     @Autowired
@@ -44,12 +47,16 @@ public class JournalEntryController {
     }
 
     @PostMapping
-    public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry){
+    public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalDTO myEntry){
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userName = authentication.getName();
-            journalEntryService.saveEntry(myEntry, userName);
-            return new ResponseEntity<>(myEntry, HttpStatus.ACCEPTED);
+            JournalEntry entry = new JournalEntry();
+            entry.setTitle(myEntry.getTitle());
+            entry.setContent(myEntry.getContent());
+            entry.setSentiment(myEntry.getSentiment());
+            journalEntryService.saveEntry(entry,userName);
+            return new ResponseEntity<>(entry, HttpStatus.ACCEPTED);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -57,7 +64,7 @@ public class JournalEntryController {
     }
 
     @GetMapping("id/{myId}")
-    public ResponseEntity<JournalEntry> getById(@PathVariable ObjectId myId){
+    public ResponseEntity<JournalEntry> getById(@PathVariable String myId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByName(userName);
@@ -72,7 +79,7 @@ public class JournalEntryController {
     }
 
     @DeleteMapping("id/{myId}")
-    public ResponseEntity<?> deleteById(@PathVariable ObjectId myId){
+    public ResponseEntity<?> deleteById(@PathVariable String myId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         boolean removed = journalEntryService.deleteById(myId, userName);
@@ -84,7 +91,7 @@ public class JournalEntryController {
     }
 
     @PutMapping ("/id/{myId}")
-    public ResponseEntity<?> updateById(@PathVariable ObjectId myId, @RequestBody JournalEntry newEntry){
+    public ResponseEntity<?> updateById(@PathVariable String myId, @RequestBody JournalDTO newEntry){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByName(userName);
@@ -95,7 +102,7 @@ public class JournalEntryController {
                 JournalEntry old = journalEntry.get();
                 old.setTitle(newEntry.getTitle() != null && !newEntry.getTitle().equals("") ? newEntry.getTitle() : old.getTitle());
                 old.setContent(newEntry.getContent() != null && !newEntry.equals("") ? newEntry.getContent() : old.getContent());
-                journalEntryService.saveEntry(old);
+                journalEntryService.save(old);
                 return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);
             }
         }

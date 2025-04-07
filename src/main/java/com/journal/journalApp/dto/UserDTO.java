@@ -4,7 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+import javax.validation.constraints.NotEmpty;
 
 
 @Data
@@ -12,11 +13,10 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class UserDTO {
 
-    @NonNull
-    @Schema(name = "The user's username")
+    @NotEmpty
+    //@Schema(name = "The user's username")
     private String userName;
     private String email;
-    private boolean sentimentAnalysis;
-    @NonNull
+    @NotEmpty
     private String password;
 }

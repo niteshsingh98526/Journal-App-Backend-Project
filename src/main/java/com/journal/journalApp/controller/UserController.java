@@ -1,6 +1,7 @@
 package com.journal.journalApp.controller;
 
 import com.journal.journalApp.api.response.WeatherResponse;
+import com.journal.journalApp.dto.UserDTO;
 import com.journal.journalApp.entity.User;
 import com.journal.journalApp.repository.UserRepository;
 import com.journal.journalApp.service.UserService;
@@ -15,11 +16,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/users")
 @Tag(name = "User API's", description = "Read, Update, Delete")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
+
+    Logger logger = Logger.getLogger(UserController.class.getName());
 
     @Autowired
     private UserService userService;
@@ -31,7 +36,7 @@ public class UserController {
     private WeatherService weatherService;
 
 
-//    @GetMapping
+//    @GetMapping("/allUser")
 //    public ResponseEntity<List> getAllUser() {
 //        List<User> all = userService.getAll();
 //        if (all != null && !all.isEmpty()){
@@ -39,23 +44,29 @@ public class UserController {
 //        }
 //        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //    }
-
-//    @GetMapping("/{name}")
-//    public ResponseEntity<String> getUserByUserName(@PathVariable String name){
-//        User byName = userService.findByName(name);
-//        if (byName.)
-//        return new ResponseEntity<>(name, HttpStatus.OK);
-//    }
+//
+    @GetMapping("{name}")
+    public ResponseEntity<User> getUserByUserName(@PathVariable String name) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userName = authentication.getName();
+            User byName = userService.findByName(name);
+            return new ResponseEntity<>(byName, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("error");
+        }
+        return null;
+    }
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable ObjectId id){
+    public ResponseEntity<?> deleteUserById(@PathVariable String id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUserName(authentication.getName());
         return new ResponseEntity<>("success",HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody User user){
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO user){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User userInDb = userService.findByName(userName);

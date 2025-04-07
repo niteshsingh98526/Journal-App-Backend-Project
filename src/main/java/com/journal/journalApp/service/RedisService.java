@@ -2,9 +2,13 @@ package com.journal.journalApp.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.journal.journalApp.api.response.WeatherResponse;
+import com.journal.journalApp.entity.User;
+import com.journal.journalApp.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -15,6 +19,7 @@ public class RedisService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
 
     public <T> T get(String key, Class<T> entityClass){
         try{
@@ -36,4 +41,6 @@ public class RedisService {
             log.error("Exception", e);
         }
     }
+
+
 }

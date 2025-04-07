@@ -1,10 +1,8 @@
 package com.journal.journalApp.service;
 
 import com.journal.journalApp.entity.User;
-import org.bson.types.ObjectId;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -16,5 +14,5 @@ public interface UserService {
 
     public User findByName(String userName);
 
-    public void deleteById(ObjectId id);
+    public void deleteById(String id);
 }

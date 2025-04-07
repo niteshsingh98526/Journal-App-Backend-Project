@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -29,4 +32,15 @@ public class JournalAppApplication {
 	public RestTemplate restTemplate(){
 		return new RestTemplate();
 	}
+
+//	public RedisConnectionFactory redisConnectionFactory() {
+//		return new JedisConnectionFactory();
+//	}
+//
+//	@Bean
+//	public RedisTemplate<?, ?> redisTemplate(RedisConnectionFactory connectionFactory){
+//		RedisTemplate<?, ?> template = new RedisTemplate<>();
+//		template.setConnectionFactory(connectionFactory);
+//		return template;
+//	}
 }

@@ -3,7 +3,7 @@ package com.journal.journalApp.service;
 import com.journal.journalApp.entity.JournalEntry;
 import com.journal.journalApp.entity.User;
 import com.journal.journalApp.repository.JournalEntryRepository;
-import org.bson.types.ObjectId;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,13 +13,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class JournalEntryServiceImpl implements JournalEntryService{
 
     @Autowired
-    private JournalEntryRepository journalEntryRepository;
-    
-    @Autowired
     private UserService userService;
+
+    private JournalEntryRepository journalEntryRepository;
+
+    JournalEntryServiceImpl(JournalEntryRepository journalEntryRepository){
+        this.journalEntryRepository=journalEntryRepository;
+    }
 
     @Override
     @Transactional
@@ -31,13 +35,13 @@ public class JournalEntryServiceImpl implements JournalEntryService{
             user.getJournalEntries().add(saved);
             userService.saveUser(user);
         }catch (Exception e){
-            System.out.println(e);
+            log.error("e",e);
             throw new RuntimeException("An error occurred while saving the entry." , e);
         }
     }
 
     @Override
-    public void saveEntry(JournalEntry journalEntry) {
+    public void save(JournalEntry journalEntry) {
         journalEntryRepository.save(journalEntry);
     }
 
@@ -47,12 +51,12 @@ public class JournalEntryServiceImpl implements JournalEntryService{
     }
 
     @Override
-    public Optional<JournalEntry> findById(ObjectId id) {
+    public Optional<JournalEntry> findById(String id) {
         return journalEntryRepository.findById(id);
     }
 
     @Override
-    public boolean deleteById(ObjectId id, String userName) {
+    public boolean deleteById(String id, String userName) {
         boolean removed = false;
         try {
             User user = userService.findByName(userName);
@@ -62,7 +66,7 @@ public class JournalEntryServiceImpl implements JournalEntryService{
                 this.journalEntryRepository.deleteById(id);
             }
         }catch (Exception e){
-            System.out.println(e);
+            log.error("e",e);
             throw  new RuntimeException("An error occurred by deleting the entry ", e);
         }
         return removed;
